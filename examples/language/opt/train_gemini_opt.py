@@ -177,9 +177,7 @@ def main():
     default_dist_spec = ShardSpec([-1], [world_size]) if args.shardinit else None
 
     # build model
-    if args.model_name_or_path is None or args.model_name_or_path == 'facebook/opt-13b':
-        # currently, there has a bug in pretrained opt-13b
-        # we can not import it until huggingface fix it
+    if args.model_name_or_path is None:
         logger.info("Train a new model from scratch", ranks=[0])
         with ColoInitContext(device=init_dev, dtype=torch.half,
                              default_dist_spec=default_dist_spec,
